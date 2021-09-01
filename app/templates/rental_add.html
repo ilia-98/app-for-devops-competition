@@ -1,0 +1,79 @@
+<form id="ModalForm" name="stepForm" class="form" method="post">
+    <div class="modal-header">
+        <h4 class="modal-title">Добавление проката</h4>
+    </div>
+    <div class="modal-body">
+        <label for="issue_date">Дата выдачи</label>
+        <div class="input-group mb-3">
+            <input type="date" class="form-control" id="issue_date" name="issue_date">
+        </div>
+        <label for="issue_time">Время выдачи</label>
+        <div class="input-group mb-3">
+            <input type="time" class="form-control" id="issue_time" name="issue_time">
+        </div>
+        <label for="rental_period">Срок проката</label>
+        <div class="input-group mb-3">
+            <input type="number" class="form-control" id="rental_period" name="rental_period">
+        </div>
+        <label for="car_id">Автомобиль</label>
+        <select class="form-control mb-3" id="car_id" name="car_id">
+            {% for item in cars %}
+              <option value="{{ item.id }}">{{ item.registration_number }}</option>
+            {% endfor %}
+        </select>
+        <label for="rental_price">Цена проката</label>
+        <div class="input-group mb-3">
+            <input type="number" class="form-control" id="rental_price" name="rental_price">
+        </div>
+
+        {% if clients|length %}
+            <div class="my-3">
+                <label class="form-check-label" for="new_client">Добавить нового клиента</label>
+                <input class="form-check-input" checked type="checkbox" value="true" name="is_new_client" id="new_client" onclick="showNewClientForm(this)">
+                <input type="hidden" name="is_new_client" value="false"/>
+            </div>
+
+            <div id="exist_client_form" style="display: none">
+                <label for="client_id">Клиент</label>
+                <select class="form-control mb-3" id="client_id" name="client_id">
+                    {% for item in clients %}
+                        <option value="{{ item.id }}">{{ item.full_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+
+        <div id="new_client_form">
+            <label for="full_name">ФИО</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="full_name" name="full_name">
+            </div>
+            <label for="gender">Пол</label>
+            <select class="form-control mb-3" id="gender"  name="gender">
+                <option value="1">Муж.</option>
+                <option value="0">Жен.</option>
+            </select>
+            <label for="birth_date">Дата рождения</label>
+            <div class="input-group mb-3">
+                <input type="date" class="form-control" id="birth_date" name="birth_date">
+            </div>
+            <label for="address">Адрес</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="address" name="address">
+            </div>
+            <label for="phone_number">Телефон</label>
+            <div class="input-group mb-3">
+                <input type="tel" class="form-control" id="phone_number" name="phone_number">
+            </div>
+            <label for="passport">Паспортные данные</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="passport" name="passport">
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Отмена</button>
+        <button id="submit" type="submit" class="btn btn-success">Сохранить</button>
+    </div>
+</form>

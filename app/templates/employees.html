@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Дата выдачи</th>
+              <th scope="col">Срок проката</th>
+              <th scope="col">Дата возврата</th>
+              <th scope="col">Автомобиль</th>
+              <th scope="col">Клиент</th>
+              <th scope="col">Цена проката</th>
+              <th scope="col">Сотрудник-менеджер</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for item in rental %}
+              <tr>
+                <td>{{ item.issue_date.strftime('%H:%M %Y-%m-%d') }}</td>
+                <td>{{ item.rental_period }}</td>
+                <td>{{ item.return_date.strftime('%H:%M %Y-%m-%d') }}</td>
+                <td>{{ item.car }}</td>
+                <td>{{ item.client }}</td>
+                <td>{{ item.rental_price }}</td>
+                <td>{{ item.employee }}</td>
+              </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+{% endblock %}

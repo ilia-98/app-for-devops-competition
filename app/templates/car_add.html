@@ -1,0 +1,59 @@
+<form id="ModalForm" name="stepForm" class="form" method="post">
+    <div class="modal-header">
+        <h4 class="modal-title">Добавление проката</h4>
+    </div>
+    <div class="modal-body">
+        <label for="registration_number">Регистрационный номер</label>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="registration_number" name="registration_number">
+        </div>
+        <label for="year">Год выпуска</label>
+        <div class="input-group mb-3">
+            <input type="number" class="form-control" id="year" name="year">
+        </div>
+        <label for="mileage">Пробег</label>
+        <div class="input-group mb-3">
+            <input type="number" class="form-control" id="mileage" name="mileage">
+        </div>
+        <label for="price">Цена</label>
+        <div class="input-group mb-3">
+            <input type="number" class="form-control" id="price" name="price">
+        </div>
+        <label for="rental_day_price">Цена дня проката</label>
+        <div class="input-group mb-3">
+            <input type="number" class="form-control" id="rental_day_price" name="rental_day_price">
+        </div>
+
+        {% if car_brands|length %}
+        <div class="my-3">
+            <label class="form-check-label" for="new_brand">Добавить новую марку</label>
+            <input class="form-check-input" checked type="checkbox" value="true" name="is_new_brand" id="new_brand" onclick="showNewBrandForm(this)">
+            <input type="hidden" name="is_new_brand" value="false"/>
+        </div>
+
+        <div id="exist_brand_form" style="display: none">
+            <label for="brand_id">Марка</label>
+            <select class="form-control mb-3" id="brand_id" name="brand_id">
+                {% for item in car_brands %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+
+        <div id="new_brand_form">
+            <label for="name">Наименование марки</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <label for="body_type">Тип кузова</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="body_type" name="body_type">
+            </div>
+        </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Отмена</button>
+        <button id="submit" type="submit" class="btn btn-success">Сохранить</button>
+    </div>
+</form>

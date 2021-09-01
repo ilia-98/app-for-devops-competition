@@ -1,4 +1,6 @@
-import os
+
+from werkzeug.exceptions import abort
+
 from app import app, Settings
 from functools import wraps
 from datetime import datetime
@@ -19,7 +21,8 @@ def manage_request(func):
         global BH_SET
         global BH_CODE
         if BH_SET:
-            return f'Error {BH_CODE}', BH_CODE
+            abort(BH_CODE)
+            # return f'Error {BH_CODE}', BH_CODE
         else:
             return func()
     return wrapper
@@ -33,7 +36,6 @@ def after_request(response):
     return response
 
 
-@app.route('/', methods=['GET', 'POST'])
 @app.route('/cache', methods=['GET', 'POST'])
 @manage_request
 def cache():
@@ -92,31 +94,34 @@ def db_get():
         return f'sorry, table Messages is non operational or empty Data: ID={Settings.PP_ID}'
 
 
-@app.route('/fs/add', methods=['GET', 'POST'])
-@manage_request
-def fs_add():
-    filename = f"{Settings.STORAGE_PATH}/myfile.txt"
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    with open(filename, "w") as f:
-        f.write("123")
-    return ''
+# @app.route('/fs/add', methods=['GET', 'POST'])
+# @manage_request
+# def fs_add():
+#     filename = f"{Settings.STORAGE_PATH}/myfile.txt"
+#     os.makedirs(os.path.dirname(filename), exist_ok=True)
+#     with open(filename, "w") as f:
+#         f.write("123")
+#     return ''
 
 
-@app.route('/fs/get', methods=['GET', 'POST'])
-@manage_request
-def fs_get():
-    # return send_from_directory(Settings.STORAGE_PATH, "myfile.txt")
-    return send_file(f"{Settings.STORAGE_PATH}/myfile.txt", as_attachment=True)
+# @app.route('/fs/get', methods=['GET', 'POST'])
+# @manage_request
+# def fs_get():
+#     # return send_from_directory(Settings.STORAGE_PATH, "myfile.txt")
+#     return send_file(f"{Settings.STORAGE_PATH}/myfile.txt", as_attachment=True)
+
 
 @app.route('/bh/set', methods=['GET', 'POST'])
 def bh_set():
     global BH_SET
     global BH_CODE
-    code = request.args.get('code')
+    data = request.values if request.values else request.json
+    code = data.get('code')
     try:
         BH_CODE = int(code)
         BH_SET = True
-        return f'Error {BH_CODE}', BH_CODE
+        abort(BH_CODE)
+        # return f'Error {BH_CODE}', BH_CODE
     except ValueError:
         return 'NaN'
 

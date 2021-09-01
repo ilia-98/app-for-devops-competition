@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <title>Прокат автомобилей</title>
+</head>
+<body>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Прокат автомобилей</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+<!--        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="{{ url_for('logout') }}">Выход</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link {{ 'active' if active_page == 'rental' else '' }}" href="{{ url_for('get_rental_page') }}">
+                  Прокаты
+                </a>
+              </li>
+<!--              <li class="nav-item">-->
+<!--               {# <a class="nav-link {{ 'active' if active_page == 'employees' else '' }}" href="{{ url_for('get_employees_page') }}"> #}-->
+<!--                  Пользователи-->
+<!--                </a>-->
+<!--              </li>-->
+              <li class="nav-item">
+                <a class="nav-link {{ 'active' if active_page == 'clients' else '' }}" href="{{ url_for('get_clients_page') }}">
+                  Клиенты
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {{ 'active' if active_page == 'cars' else '' }}" href="{{ url_for('get_cars_page') }}">
+                  Машины
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" target="_blank" rel="noopener noreferrer" href="{{ external_link }}">
+                  Внешняя система
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            {% block content %}
+            {% endblock %}
+        </main>
+      </div>
+    </div>
+     <!-- Dynamic Modal -->
+    <div class="modal" id="Modal" tabindex="-1" role="dialog" aria-labelledby="FormModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+             <!-- load content here -->
+            </div>
+        </div>
+    </div>
+    <!-- End Dynamic Modal -->
+    <script src="static/js/jquery-3.6.0.min.js" ></script>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/feather.min.js"></script>
+    <script src="static/js/script.js"></script>
+</body>
+</html>
